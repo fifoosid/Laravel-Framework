@@ -1,0 +1,41 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+Route::get('/', function() {
+    return redirect('/home');
+});
+Route::get('/home','HotelsController@index')
+    ->name('home');
+
+Route::get('/hotels/random', 'HotelsController@random');
+Route::get('/hotels/create', 'HotelsController@create');
+Route::get('/hotels/all', 'HotelsController@all')
+    ->name('allHotels');
+Route::post('/hotels/search', 'HotelsController@search');
+Route::post('/hotels', 'HotelsController@store');
+Route::get('/hotels/{hotel}', 'HotelsController@show');
+
+Route::get('/about', function()
+{
+    return view('layouts.about');
+});
+
+Route::post('/comment', 'CommentsController@add');
+
+Route::get('/profile', 'Auth\ProfileController@index');
+Route::post('/profile/update', 'Auth\ProfileController@update');
+
+
+Auth::routes();
+Route::get('/logout', 'Auth\LogoutController@logout');
+
+// Route::get('/home', 'HomeController@index');
