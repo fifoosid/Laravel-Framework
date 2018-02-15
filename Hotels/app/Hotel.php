@@ -17,12 +17,22 @@ class Hotel extends Model
 
         //Definetely not optimized
         $flag = true;
-        $places[0] = Hotel::orderByRaw('RAND()')->take(1)->get();
-        $places[0] = $places[0][0]['location'];
+
+        //Get the number of records in DB:
+        $maximum = Hotel::count();
+        $randomNumber = rand(1, $maximum);
+        //Trying to escape FIND RAND, because it is slow
+        //Old:
+        // $places[0] = Hotel::orderByRaw('RAND()')->take(1)->get();
+        //New:
+        $places[0] = Hotel::find($randomNumber);
+        $places[0] = $places[0]->location;
 
         while(count($places) < $randomLength) {
-            $tempPlace = Hotel::orderByRaw('RAND()')->take(1)->get();
-            $tempPlace = $tempPlace[0]['location'];
+            // $tempPlace = Hotel::orderByRaw('RAND()')->take(1)->get();
+            $randomNumber = rand(1, $maximum);    
+            $tempPlace = Hotel::find($randomNumber);
+            $tempPlace = $tempPlace->location;
 
 
             $flag = true;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Hotel;
+use App\Mail\newHotel;
 
 class HotelsController extends Controller
 {
@@ -20,8 +21,7 @@ class HotelsController extends Controller
 
     public function all(Request $request)
     {
-        $hotels = Hotel::all();
-
+        $hotels = Hotel::orderBy('created_at', 'desc')->paginate(10);
         
         $places = Hotel::randomPlaces();//setting $places to array of arrays
 
@@ -35,7 +35,16 @@ class HotelsController extends Controller
 
     public function create()
     {
-        return view('hotel.create');
+        $user = \Auth::user();
+        
+        if($user->profile_type != 'sell')
+        {
+            return view('layouts.mustBeSellAccount');
+        }
+        else
+        {
+            return view('hotel.create');
+        }
     }
 
     public function random()
@@ -75,7 +84,7 @@ class HotelsController extends Controller
             $hotels->where('location', '=', $place);
         }
         
-        $hotels = $hotels->get();//Get all the events matching the criteria
+        $hotels = $hotels->paginate(10);//Get all the events matching the criteria
 
         return view('hotel.hotels', compact(['hotels', 'places', 'price', 'stars', 'place']));
     }
@@ -88,6 +97,8 @@ class HotelsController extends Controller
 
     public function store(Request $request)
     {
+        $user = \Auth::user();
+
         $request->validate([
             'name' => 'required|min:3',
             'stars' => 'required',
@@ -109,6 +120,9 @@ class HotelsController extends Controller
         $hotel->imageurl = $request->input('imageurl');
 
         $hotel->save();
+
+        \Mail::to($user)->send(new newHotel($user));
+
 
         return redirect('/');
     }

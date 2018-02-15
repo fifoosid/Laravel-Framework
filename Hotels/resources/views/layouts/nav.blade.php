@@ -18,7 +18,13 @@
               <li><a href="/hotels/all">All hotels</a></li>
               <li><a href="/hotels/random">Random Hotel</a></li>
               <li><a href="/about">About</a></li>
-              <li><a href="/hotels/create">Add Hotel</a></li>
+
+              @if(isset($user))
+                @if($user->profile_type == 'sell')
+                  <li><a href="/hotels/create">Add Hotel</a></li>              
+                @endif
+              @endif
+
             </ul>
             <ul class="nav navbar-nav navbar-right">
               @if(!Auth::check())
@@ -26,10 +32,28 @@
                 <li class="navbar-right"><a href="{{ route('login') }}">Login</a></li>
               @else
                 <li class="dropdown navbar-right">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" name="stars">Welcome, {{ Auth::user()->name }}<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle profile-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" name="stars">
+                  
+                  <div class="profile-button">
+                    <span class="welcome-message">Welcome, {{ Auth::user()->name }}</span>
+                  </div>
+                  
+                  <div class="image-wrapper-thumb">
+                    <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}">
+                  </div>
+
+                  <div class="profile-button">
+                    <span class="caret"></span>
+                  </div>
+                </a>
+
                   <ul class="dropdown-menu">
-                    <li><a href="/profile">Profile</a></li>
-                    <li><a href="/hotels/create">Add Hotel</a></li>
+                    <li><a href="/profile/main">Profile</a></li>
+                    @if(isset($user))
+                      @if($user->profile_type == 'sell')
+                        <li><a href="/hotels/create">Add Hotel</a></li>              
+                      @endif
+                    @endif
                     <li><a href="/logout">Log out</a></li>
                   </ul>
                 </li>

@@ -2,7 +2,7 @@
 @section('content')
     <h1>All Hotels</h1>
     <hr>
-        <form method="POST" action="/hotels/search">
+        <form method="GET" action="/hotels/search">
     <div class="flex-wrap filter-div">
             <div class="margin-auto">
                 <div class="form-group">
@@ -84,6 +84,6 @@
         @endforeach
     </div>
 
-    {{--  <div class="container-fluid">{{ $hotels->links()}}</div>  --}}
+    <div class="container-fluid">{{ $hotels->appends(Request::except('page'))->links()}}</div>
 
 @endsection

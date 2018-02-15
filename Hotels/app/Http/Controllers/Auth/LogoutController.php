@@ -8,9 +8,15 @@ use App\Http\Controllers\Controller;
 
 class LogoutController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => ['logout', 'getLogout']]);
+    }
+
     public function logout()
     {
         \Auth::logout();
-        return redirect()->back();
+        return redirect()->home();
     }
 }

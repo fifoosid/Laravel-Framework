@@ -62,6 +62,18 @@
                         </div>
 
                         <div class="form-group">
+                        <label for="profile-type" class="col-md-4 control-label">Please choose the type of your profile</label>
+                            <div class="btn-group col-md-6" data-toggle="buttons">
+                                <label class="btn btn-primary control-label">
+                                    <input type="radio" name="options" id="option1" value="0" checked> Find Hotel
+                                </label>
+                                <label class="btn btn-primary control-label">
+                                    <input type="radio" name="options" id="option2" value='1'> Place your hotel on Hotels.com
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Register

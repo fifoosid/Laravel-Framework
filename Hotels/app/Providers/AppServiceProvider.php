@@ -14,7 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('*', function($view) {
+            $user = \Auth::user();
+
+            $view->with('user', $user);
+        });
+        
     }
 
     /**
@@ -24,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // if($this->app->isLocal())
+        // {
+        //     $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        // }
     }
 }

@@ -3,41 +3,31 @@
     <h1>Profile</h1>
     <hr>
 
+    @include('layouts.success')
+    @include('layouts.errors')
+
     <div class="profile-container">
-    <button class="switch-buttons">Main Info</button>
-    <button class="switch-buttons">Change Password</button>
 
-        <form method="POST" action="/profile/update">
-            <div class="main-info">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" name="name" value="{{ $user->name }}" required autofocus>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" name="email" value="{{ $user->email }}" required autofocus>
-                </div>
+        <div class="fluid-container flex">
+            <div class="button-container">
+                <a href="/profile/main">
+                    <button class="switch-buttons">Main Info</button>
+                </a>
+                <a href="/profile/password">
+                    <button class="switch-buttons">Change Password</button>
+                </a>
             </div>
 
-            <button class="btn btn-primary">Change Info</button>
-            {{ csrf_field() }}
-        </form>
-
-        <form method="POST" action="/profile/update">
-            <div class="password-info">
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" class="form-control" required autofocus>
+            <div id="change-image" class="image-wrapper flex ml-auto">
+                <div class="avatar-wrapper">
+                    <img src="{{ URL::to('/')}}/Images/change_image.png" alt="Change image">
                 </div>
-
-                <div class="form-group">
-                    <label for="password_confirmation">Confirm Password</label>
-                    <input type="password" name="password_confirmation" class="form-control" required autofocus>
-                </div>
+                <img class="profile-picture" src="{{ $user->avatar_url }}" alt="{{ $user->name }}">
             </div>
+        </div>
 
-            <button class="btn btn-danger">Change Password</button>
-        </form>
+        @yield('info-to-update')
+        
     </div>
+
 @endsection

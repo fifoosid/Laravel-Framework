@@ -20,7 +20,7 @@ Route::get('/hotels/random', 'HotelsController@random');
 Route::get('/hotels/create', 'HotelsController@create');
 Route::get('/hotels/all', 'HotelsController@all')
     ->name('allHotels');
-Route::post('/hotels/search', 'HotelsController@search');
+Route::get('/hotels/search', 'HotelsController@search');
 Route::post('/hotels', 'HotelsController@store');
 Route::get('/hotels/{hotel}', 'HotelsController@show');
 
@@ -31,8 +31,10 @@ Route::get('/about', function()
 
 Route::post('/comment', 'CommentsController@add');
 
-Route::get('/profile', 'Auth\ProfileController@index');
-Route::post('/profile/update', 'Auth\ProfileController@update');
+Route::get('/profile/main', 'Auth\ProfileController@main');
+Route::post('/profile/updateMain', 'Auth\ProfileController@updateMain');
+Route::get('/profile/password', 'Auth\ProfileController@password');
+Route::post('/profile/updatePassword', 'Auth\ProfileController@updatePassword');
 
 
 Auth::routes();

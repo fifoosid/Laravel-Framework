@@ -18,7 +18,6 @@
   </head>
 
   <body>
-
     @include ('layouts.nav')
 
     <div class="container">
